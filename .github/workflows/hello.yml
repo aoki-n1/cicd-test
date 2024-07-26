@@ -10,5 +10,6 @@ jobs:                             # ジョブの定義
       - run: wget https://download.atmark-techno.com/armadillo-iot-g4/tool/build-rootfs-latest.tar.gz
       - run: tar xf build-rootfs-latest.tar.gz
       - run: cd build-rootfs-v3.20-at.1
+      - run: ls
       - run: sudo ./build_rootfs.sh
       - run: ls
