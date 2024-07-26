@@ -6,3 +6,9 @@ jobs:                             # ジョブの定義
     steps:                        # ステップの定義
       - run: uname -a             # シェルコマンドの実行
       - uses: actions/checkout@v4 # アクションの呼び出し
+      - run: sudo apt install podman btrfs-progs xxhash
+      - run: wget https://download.atmark-techno.com/armadillo-iot-g4/tool/build-rootfs-latest.tar.gz
+      - run: tar xf build-rootfs-latest.tar.gz
+      - run: cd build-rootfs-v3.20-at.1
+      - run: sudo ./build_rootfs.sh
+      - run: ls
