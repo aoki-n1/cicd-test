@@ -1,4 +1,4 @@
-name: Hello                       # ワークフロー名
+name: Build Kernel                # ワークフロー名
 on: push                          # イベント（プッシュ時に起動）
 jobs:                             # ジョブの定義
   hello:                          # ジョブID
@@ -6,10 +6,13 @@ jobs:                             # ジョブの定義
     steps:                        # ステップの定義
       - run: uname -a             # シェルコマンドの実行
       - uses: actions/checkout@v4 # アクションの呼び出し
-      - run: sudo apt install podman btrfs-progs xxhash
-      - run: wget https://download.atmark-techno.com/armadillo-iot-g4/tool/build-rootfs-latest.tar.gz
-      - run: tar xf build-rootfs-latest.tar.gz
-      - run: ls build-rootfs-v3.20-at.1
-      - run: cd build-rootfs-v3.20-at.1 && sudo ./build_rootfs.sh
-      - run: ls build-rootfs-v3.20-at.1
-      - run: ls
+
+      - run: sudo apt install crossbuild-essential-arm64 bison flex python3-pycryptodome python3-pyelftools zlib1g-dev libssl-dev bc wireless-regdb atmark-firmware
+      - run: wget https://armadillo.atmark-techno.com/files/downloads/alpine/v3.20/atmark/src/linux-at-x2-5.10.222-r0.tar
+      - run: tar xf linux-at-x2-5.10.222-r0.tar
+      - run: ls linux-at-x2-5.10.222-r0
+      - run: cd linux-at-x2-5.10.222-r0 && tar xf linux-5.10-5.10.222-r0.tar.gz
+      - run: cd linux-at-x2-5.10.222-r0/linux-5.10-5.10.222-r0 && make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- x2_defconfig
+      - run: cd linux-at-x2-5.10.222-r0/linux-5.10-5.10.222-r0 && make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- -j5
+
+
